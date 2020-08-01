@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.UserDAO;
 import model.User;
-import utility.ConnectionManager;
 
 @WebServlet(urlPatterns= {"/signup"})
 public class SignUpController extends HttpServlet {
@@ -41,13 +40,16 @@ public class SignUpController extends HttpServlet {
 		
 		// Fill your code here
 		
+		User user= new User(email,password);
+		UserDAO userdao = new UserDAO();
+		int checkUser=userdao.signUp(user);
 		
 		if(checkUser!=0)
 		{
 						
 			System.out.println(user.getEmail());
 			System.out.println(user.getPassword());
-			System.out.println(user.getDate());
+			//System.out.println(user.getDate());
 			request.setAttribute("message", "Registration Successful");
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 			rd.forward(request, response);
